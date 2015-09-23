@@ -1,0 +1,32 @@
+.player {
+	position: absolute;
+	height: 50px;
+	width: 50px;
+	background-color: grey;
+}
+.dungeon {
+	max-width: 325px; 
+	position: fixed;
+}
+.room {
+	height: 50px;
+	width: 50px;
+	border: 2px solid grey;
+	display: inline-block;
+	margin: 0;
+}
+
+.player {
+	font-size: 30px;
+	text-align: center;
+	color: pink;
+}
+
+.roomRepeater {
+	display: inline-block;
+}
+
+.inventory {
+	margin: 0;
+}
+
