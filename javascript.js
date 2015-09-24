@@ -48,41 +48,41 @@ var mainControllerFunc = function($scope) {
 
 
 	$scope.rooms = [
-	room1 = new Room(),
-	room2 = new Room(medusa),
-	room3 = new Room(worstEnemy),
-	room4 = new Room(cyclops),
-	room5 = new Room(basilisk),
-	room6 = new Room(),
-	room7 = new Room(),
-	room8 = new Room(),
-	room9 = new Room(),
-	room10 = new Room(),
-	room11 = new Room(),
-	room12 = new Room(),
-	room13 = new Room(),
-	room14 = new Room(),
-	room15 = new Room(),
-	room16 = new Room(),
-	room17 = new Room(),
-	room18 = new Room(),
-	room19 = new Room(),
-	room20 = new Room(),
-	room21 = new Room(),
-	room22 = new Room(),
-	room23 = new Room(),
-	room29 = new Room(),
-	room24 = new Room(),
-	room25 = new Room(),
-	room26 = new Room(),
-	room27 = new Room(),
-	room28 = new Room(),
-	room30 = new Room(),
+	new Room(),
+	new Room(medusa),
+	new Room(worstEnemy),
+	new Room(cyclops),
+	new Room(basilisk),
+	new Room(),
+	new Room(),
+	new Room(),
+	new Room(),
+	new Room(),
+	new Room(),
+	new Room(),
+	new Room(),
+	new Room(),
+	new Room(),
+	new Room(),
+	new Room(),
+	new Room(),
+	new Room(),
+	new Room(),
+	new Room(),
+	new Room(),
+	new Room(),
+	new Room(),
+	new Room(),
+	new Room(),
+	new Room(),
+	new Room(),
+	new Room(),
+	new Room(),
 	]
 	
 
 
-	room1.active = true
+	$scope.	rooms[0].active = true
 	$scope.activeRoom = $scope.rooms[0]
 	$scope.activeIndex = 0
 	
@@ -102,7 +102,7 @@ var mainControllerFunc = function($scope) {
 		    $scope.moveUpDown += 55;
 		    $scope.activeIndex += 6
 		   	$scope.activeRoom = $scope.rooms[$scope.activeIndex]
-		   	if ($scope.activeRoom.monster != undefined) {
+		   	if ($scope.activeRoom.monster != undefined && $scope.activeRoom.monster.dead === false) {
 				$scope.activeMonster.push($scope.activeRoom.monster) 
 			}
 		}
@@ -112,7 +112,7 @@ var mainControllerFunc = function($scope) {
 		  	$scope.moveUpDown -= 55;
 		  	$scope.activeIndex -= 6
 		   	$scope.activeRoom = $scope.rooms[$scope.activeIndex]
-		   	if ($scope.activeRoom.monster != undefined) {
+		   	if ($scope.activeRoom.monster != undefined && $scope.activeRoom.monster.dead === false) {
 				$scope.activeMonster.push($scope.activeRoom.monster) 
 			}
 
@@ -123,7 +123,7 @@ var mainControllerFunc = function($scope) {
 		   	$scope.moveLeftRight -= 50
 		   	$scope.activeIndex -= 1
 		   	$scope.activeRoom = $scope.rooms[$scope.activeIndex]
-		   	if ($scope.activeRoom.monster != undefined) {
+		   	if ($scope.activeRoom.monster != undefined && $scope.activeRoom.monster.dead === false) {
 				$scope.activeMonster.push($scope.activeRoom.monster) 
 			}
 
@@ -133,19 +133,30 @@ var mainControllerFunc = function($scope) {
 		   	$scope.moveLeftRight += 50;
 		   	$scope.activeIndex += 1
 		   	$scope.activeRoom = $scope.rooms[$scope.activeIndex]
-		   	if ($scope.activeRoom.monster != undefined) {
+		   	if ($scope.activeRoom.monster != undefined && $scope.activeRoom.monster.dead === false) {
 				$scope.activeMonster.push($scope.activeRoom.monster) 
 			}
 
 
 		}
 	}
+
+	// var monsterChecker = function() {
+	// 	if ($scope.activeRoom.monster != undefined  && $scope.activeRoom.monster.dead === false) {
+	// 		$scope.activeMonster.push($scope.activeRoom.monster) 
+	// 	}
+	// }
+
+
+
+
 	$scope.attack = function(monster) {
 		$scope.player.attack(monster)
 		if (this.monster.hp <= 0) {
 			$scope.dead = true;
 			this.monster.dead = true
 			console.log(monster.name + ' is dead.')
+			console.log($scope.activeRoom.monster)
 		}
 		if ($scope.player.hp <= 0) {
 			alert('YOU ARE DEAD')
@@ -153,14 +164,14 @@ var mainControllerFunc = function($scope) {
 		}
 	}
 
-
 	$scope.run = function() {
+		$scope.activeIndex = 0
 		console.log('u ran like a little bitch boy')
 	}
 	$scope.dead = false;
 	$scope.loot = function(monster) {
 		$scope.player.items.push(monster.items.pop())
-		$scope.activeMonster.pop()
+			$scope.activeMonster.pop()
 		$scope.dead = false
 	}
 
