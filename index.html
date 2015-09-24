@@ -11,19 +11,22 @@
 <div class="main container">
 <h2>{{ greeting }}</h2>
 <div class = "dungeon">
-<div class = "player" ng-model = "player" style="top:{{moveUpDown}}px;left: {{moveLeftRight}}px;"> <i class="fa fa-meh-o"></i></div>
-<div class = "roomRepeater" ng-repeat = "room in rooms"><div class = "room"></div></div>
+<div ng-model = "player" style="top:{{moveUpDown}}px;left: {{moveLeftRight}}px;"></div>
+<div class = "roomRepeater" ng-repeat = "room in rooms"><div class = "room" ng-class = '{ active: activeIndex === $index }'></div></div>
 
 
 
 
 <hr>
-Inventory: <ul ng-repeat= "inv in player.inventory" class = "inventory"> 
-<li> {{ inv }}</li>
-</ul>
-
+<form ng-show='needToEnterName'><input placeholder = "enter your name" ng-model="name" ng-show='needToEnterName'><button ng-click = 'enter()	'>enter</button></form> <br>
+<strong>{{name}}</strong> <br>
+HP : {{ player.hp }} <br>
 Gold: {{ player.gold }} <br>
-HP : {{ player.hp }}
+Attackpower: {{ player.attackpower }}<br>
+
+Inventory: <ul ng-repeat= "item in player.items" class = "inventory"> 
+<li> {{ item }}</li>
+</ul>
 <hr>
 you enter the dungeon.
 
