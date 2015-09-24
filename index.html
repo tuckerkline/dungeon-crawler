@@ -15,7 +15,7 @@
 <div class = "roomRepeater" ng-repeat = "room in rooms"><div class = "room" ng-class = '{ active: activeIndex === $index }'></div></div>
 
 
-
+</div>
 
 <hr>
 <form ng-show='needToEnterName'><input placeholder = "enter your name" ng-model="name" ng-show='needToEnterName'><button ng-click = 'enter()	'>enter</button></form> <br>
@@ -31,11 +31,11 @@ Inventory: <ul ng-repeat= "item in player.items track by $index" class = "invent
 you enter the dungeon. <br>
 
 <div ng-repeat = "monster in activeMonster track by $index">
-you encounter a {{monster.name}} it has {{monster.hp}} hitpoints and an attack power of {{monster.attackpower}}.
-what do you want to do? <button ng-click="attack(monster)">attack</button> <button ng-click="run()">run</button><button ng-show="dead" ng-click="loot(monster)">loot the body</button>
+you encounter a {{monster.name}} it has {{monster.hp}} hitpoints and an attack power of {{monster.attackpower}}. it is dead: {{monster.dead}}.
+What do you want to do? <button ng-click="attack(monster)">attack</button> <button ng-click="run()">run</button><button ng-show="dead" ng-click="loot(monster)">loot the body</button>
 </div>
 
-</div>
+
 
 </div> 
 <script src="javascript.js"></script>

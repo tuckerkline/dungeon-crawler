@@ -21,32 +21,38 @@ var mainControllerFunc = function($scope) {
 
 	$scope.player = new Player(["sword", "wool hat", "grappling hook"], 10, 20, 10)
 
-	var Monster = function(name, hp, items, gold, attackpower) {
+	var Monster = function(name, hp, items, gold, attackpower, boss) {
 		this.name  = name;
 		this.hp    = hp;
 		this.items = items;
 		this.gold = gold;
 		this.attackpower = attackpower;
+		this.boss = boss
 		this.dead = false
 	}
-	var medusa = new Monster('Medusa', 10, ['stone rod'], 1, 4)
-	var cyclops = new Monster('Cyclops', 20, ['goopy eye'], 1, 2)
-	var basilisk = new Monster('Basilisk', 24, ['diary'], 5, 4)
-	var giant = new Monster('GIANT!', 50, ['clubbing pants'], 0, 10)
-	var hydra = new Monster('Hydra', 20, ['one of three heads'], 25, 8)
+
+	var medusa = new Monster( 'medusa', 10, ['stone rod'], 1, 4, false)
+	cyclops = new Monster('Cyclops', 20, ['goopy eye'], 1, 2, false),
+	basilisk = new Monster('Basilisk', 24, ['diary'], 5, 4, false),
+	giant = new Monster('GIANT!', 50, ['clubbing pants'], 0, 10, false),
+	hydra = new Monster('Hydra', 20, ['one of three heads'], 25, 8, false),
+	worstEnemy = new Monster ('Your Worst Enemy', 100, ['game winning item'], 1000000, 22, true)
 
 
 	var Room = function(monster, active) {
 		this.monster = monster;
 		this.active = false
 	}
-	
+
+	// console.log()
+
+
 	$scope.rooms = [
 	room1 = new Room(),
 	room2 = new Room(medusa),
-	room3 = new Room(cyclops),
-	room4 = new Room(),
-	room5 = new Room(),
+	room3 = new Room(worstEnemy),
+	room4 = new Room(cyclops),
+	room5 = new Room(basilisk),
 	room6 = new Room(),
 	room7 = new Room(),
 	room8 = new Room(),
@@ -65,12 +71,12 @@ var mainControllerFunc = function($scope) {
 	room21 = new Room(),
 	room22 = new Room(),
 	room23 = new Room(),
+	room29 = new Room(),
 	room24 = new Room(),
 	room25 = new Room(),
 	room26 = new Room(),
 	room27 = new Room(),
 	room28 = new Room(),
-	room29 = new Room(),
 	room30 = new Room(),
 	]
 	
@@ -80,7 +86,6 @@ var mainControllerFunc = function($scope) {
 	$scope.activeRoom = $scope.rooms[0]
 	$scope.activeIndex = 0
 	
-	// $scope.rooms.push(room1, room2, room3, room4, room5, room6, room7, room8, room9, room10, room11, room12, room13, room14, room15, room16, room17, room18, room19, room20, room21, room22, room23, room24, room25, room26, room27, room28, room29, room30)
 
 	$scope.needToEnterName = true;
 	$scope.enter = function() {
@@ -139,9 +144,16 @@ var mainControllerFunc = function($scope) {
 		$scope.player.attack(monster)
 		if (this.monster.hp <= 0) {
 			$scope.dead = true;
+			this.monster.dead = true
 			console.log(monster.name + ' is dead.')
 		}
+		if ($scope.player.hp <= 0) {
+			alert('YOU ARE DEAD')
+			window.location.reload();
+		}
 	}
+
+
 	$scope.run = function() {
 		console.log('u ran like a little bitch boy')
 	}
