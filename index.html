@@ -24,11 +24,16 @@ HP : {{ player.hp }} <br>
 Gold: {{ player.gold }} <br>
 Attackpower: {{ player.attackpower }}<br>
 
-Inventory: <ul ng-repeat= "item in player.items" class = "inventory"> 
+Inventory: <ul ng-repeat= "item in player.items track by $index" class = "inventory"> 
 <li> {{ item }}</li>
 </ul>
 <hr>
-you enter the dungeon.
+you enter the dungeon. <br>
+
+<div ng-repeat = "monster in activeMonster track by $index">
+you encounter a {{monster.name}} it has {{monster.hp}} hitpoints and an attack power of {{monster.attackpower}}.
+what do you want to do? <button ng-click="attack(monster)">attack</button> <button ng-click="run()">run</button><button ng-show="dead" ng-click="loot(monster)">loot the body</button>
+</div>
 
 </div>
 
