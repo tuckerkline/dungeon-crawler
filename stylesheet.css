@@ -1,3 +1,6 @@
+* {
+	font-family: 'courier';
+}
 .player {
 	position: absolute;
 	height: 50px;
@@ -34,3 +37,7 @@
 	background-color: grey;
 }
 
+.store {
+	float: right;
+	text-align: left;
+}

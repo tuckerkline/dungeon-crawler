@@ -9,7 +9,21 @@
 </head>
 <body ng-controller = "mainController" ng-keydown="handleKeydown($event)" ng-cloak>
 <div class="main container">
-<h2>{{ greeting }}</h2>
+<h2 style="color: red">{{ greeting }}</h2>
+<div class = "store">
+<strong>Store:</strong>	
+	<ul>
+	<li>potion <button ng-click = "buyPotion()">2 <i class="fa fa-money"></i></button></li>
+	<li>blessing of +2 attackpower <button ng-click = "buyBlessing()">5 <i class="fa fa-money"></i></button></li>
+	<li>useless trinket <button ng-click = "buyTrinket()">100 <i class="fa fa-money"></i></button></li>
+	<li>crotchguard of +2 defense <button ng-click = "buyCrotchguard()">2<i class="fa fa-money"></i></button></li>
+	</ul>
+
+
+</div>
+
+
+
 <div class = "dungeon">
 <div ng-model = "player" style="top:{{moveUpDown}}px;left: {{moveLeftRight}}px;"></div>
 <div class = "roomRepeater" ng-repeat = "room in rooms"><div class = "room" ng-class = '{ active: activeIndex === $index }'></div></div>
@@ -22,7 +36,9 @@
 <strong>{{name}}</strong> <br>
 HP : {{ player.hp }} <br>
 Gold: {{ player.gold }} <br>
+Potions: {{ player.potions }} <button ng-click="drink()"><i class="fa fa-beer"></i></button> <br>
 Attackpower: {{ player.attackpower }}<br>
+Defense: {{ player.defense }} <br>
 
 Inventory: <ul ng-repeat= "item in player.items track by $index" class = "inventory"> 
 <li> {{ item }}</li>

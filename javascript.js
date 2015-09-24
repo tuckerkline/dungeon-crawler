@@ -2,24 +2,26 @@ var app = angular.module('myApp', [])
 var mainControllerFunc = function($scope) {
 	
 
-	var Player = function(items, gold, hp, attackpower) {
+	var Player = function(items, gold, hp, attackpower, potions, defense) {
 		this.items = items
 		this.gold = gold
 		this.hp = hp
 		this.attackpower = attackpower
 		this.dead = false
+		this.potions = potions
+		this.defense = defense
 	}
 
 	Player.prototype.attack = function(monster) {
 		if (monster.dead != true) {
 			monster.hp -= this.attackpower;
-			this.hp -= monster.attackpower
+			this.hp -= monster.attackpower - this.defense
 			console.log(monster.hp)
 		}
 
 	}
 
-	$scope.player = new Player(["sword", "wool hat", "grappling hook"], 10, 20, 10)
+	$scope.player = new Player(["sword", "wool hat", "grappling hook"], 1000, 20, 10, 4, 0)
 
 	var Monster = function(name, hp, items, gold, attackpower, boss) {
 		this.name  = name;
@@ -148,15 +150,18 @@ var mainControllerFunc = function($scope) {
 	// }
 
 
-
+	$scope.drink = function() {
+		if ($scope.player.potions > 0) {
+			$scope.player.potions--
+			$scope.player.hp = $scope.player.hp + 15
+		}
+	}
 
 	$scope.attack = function(monster) {
 		$scope.player.attack(monster)
 		if (this.monster.hp <= 0) {
 			$scope.dead = true;
 			this.monster.dead = true
-			console.log(monster.name + ' is dead.')
-			console.log($scope.activeRoom.monster)
 		}
 		if ($scope.player.hp <= 0) {
 			alert('YOU ARE DEAD')
@@ -171,8 +176,34 @@ var mainControllerFunc = function($scope) {
 	$scope.dead = false;
 	$scope.loot = function(monster) {
 		$scope.player.items.push(monster.items.pop())
-			$scope.activeMonster.pop()
+		$scope.player.gold += monster.gold
+		$scope.activeMonster.pop()
 		$scope.dead = false
+	}
+	//shop
+	$scope.buyPotion = function() {
+		if ($scope.player.gold >= 2) {
+			$scope.player.potions++
+			$scope.player.gold = $scope.player.gold - 2
+		}
+	}
+	$scope.buyBlessing = function() {
+		if ($scope.player.gold >= 5) {
+			$scope.player.attackpower += 2
+			$scope.player.gold -= 5
+		}
+	}
+	$scope.buyTrinket = function() {
+		if ($scope.player.gold >= 100) {
+			$scope.player.items.push("useless trinket")
+			$scope.player.gold -= 100
+		}
+	}
+	$scope.buyCrotchguard = function() {
+		if ($scope.player.gold >= 2) {
+			$scope.player.defense += 2
+			$scope.player.gold -= 2
+		}
 	}
 
 
