@@ -23,31 +23,39 @@ var mainControllerFunc = function($scope) {
 
 	$scope.player = new Player(["sword", "wool hat", "grappling hook"], 1000, 20, 10, 4, 0)
 
-	var Monster = function(name, hp, items, gold, attackpower, boss) {
+	var Monster = function(name, hp, items, gold, attackpower) {
 		this.name  = name;
 		this.hp    = hp;
 		this.items = items;
 		this.gold = gold;
 		this.attackpower = attackpower;
-		this.boss = boss
 		this.dead = false
 	}
 
 	
 
 	var monstersArray = [
-	new Monster( 'medusa', 10, ['stone rod'], 1, 4, false),
-	new Monster('Cyclops', 20, ['goopy eye'], 1, 2, false),
-	new Monster('Basilisk', 24, ['diary'], 5, 4, false),
-	new Monster('GIANT!', 50, ['clubbing pants'], 0, 10, false),
-	new Monster('Hydra', 20, ['one of three heads'], 25, 8, false),
-	new Monster ('Your Worst Enemy', 100, ['game winning item'], 1000000, 22, true),
+	new Monster('Medusa', 10, ['stone rod'], 1, 4),
+	new Monster('Cyclops', 20, ['goopy eye'], 1, 2),
+	new Monster('Basilisk', 24, ['diary'], 5, 4),
+	new Monster('GIANT!', 50, ['clubbing pants'], 0, 10),
+	new Monster('Hydra', 20, ['one of three heads'], 25, 8),
+	new Monster('BOSS MONSTER', 100, ['game winning item'], 1000000, 22),
+	new Monster('Troll', 30, ['booger wand'], 30, 9),
+	new Monster('Orc', 15, ['ugly mask'], 75, 9),
+	new Monster('Pokemon', 1, ['tall grass'], 15, 0),
+	new Monster('Wolf', 19, ['tooth'], 0, 6),
+	new Monster('Chimera', 35, ['camera'], 60, 18),
+	// new Monster(),
+	// new Monster(),
+	// new Monster(),
+	// new Monster(),
 	]
 
 
 	var Room = function(active) {
 		this.createMonster = function() {
-			var randomNumber = Math.floor(Math.random() * 6)
+			var randomNumber = Math.floor(Math.random() * 16)
 			var selectedMonster = []
 			selectedMonster.push(monstersArray[randomNumber])
 			monstersArray.splice(randomNumber, 1)
@@ -112,6 +120,7 @@ var mainControllerFunc = function($scope) {
 	$scope.handleKeydown = function(event){
 		//down
 		if ( event.which === 40 && $scope.moveUpDown <= 200	) {
+			$scope.activeMonster = []
 		    $scope.moveUpDown += 55;
 		    $scope.activeIndex += 6
 		   	$scope.activeRoom = $scope.rooms[$scope.activeIndex]
@@ -122,6 +131,7 @@ var mainControllerFunc = function($scope) {
 
 		//up
 		if ( event.which === 38 && $scope.moveUpDown > 0) {
+			$scope.activeMonster = []
 		  	$scope.moveUpDown -= 55;
 		  	$scope.activeIndex -= 6
 		   	$scope.activeRoom = $scope.rooms[$scope.activeIndex]
@@ -133,6 +143,7 @@ var mainControllerFunc = function($scope) {
 		
 		//left
 		if (event.which === 37 && $scope.moveLeftRight > 0 ) {
+			$scope.activeMonster = []
 		   	$scope.moveLeftRight -= 50
 		   	$scope.activeIndex -= 1
 		   	$scope.activeRoom = $scope.rooms[$scope.activeIndex]
@@ -143,6 +154,7 @@ var mainControllerFunc = function($scope) {
 		}
 		//right
 		if (event.which === 39 && $scope.moveLeftRight <= 200) {
+			$scope.activeMonster = []
 		   	$scope.moveLeftRight += 50;
 		   	$scope.activeIndex += 1
 		   	$scope.activeRoom = $scope.rooms[$scope.activeIndex]
@@ -183,6 +195,7 @@ var mainControllerFunc = function($scope) {
 	$scope.run = function() {
 		$scope.activeIndex = 0
 		console.log('u ran like a little bitch boy')
+		$scope.activeMonster = []
 	}
 	$scope.dead = false;
 	$scope.loot = function(monster) {
@@ -212,9 +225,9 @@ var mainControllerFunc = function($scope) {
 		}
 	}
 	$scope.buyCrotchguard = function() {
-		if ($scope.player.gold >= 2) {
+		if ($scope.player.gold >= 9) {
 			$scope.player.defense += 2
-			$scope.player.gold -= 2
+			$scope.player.gold -= 9
 		}
 	}
 	var gameWinChecker = function() {
@@ -222,6 +235,7 @@ var mainControllerFunc = function($scope) {
 			console.log($scope.player.items[i])
 			if ($scope.player.items[i] === 'game winning item') {
 				alert('you win the game')
+				window.location.reload();
 			}
 		}
 	}
