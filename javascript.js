@@ -33,17 +33,28 @@ var mainControllerFunc = function($scope) {
 		this.dead = false
 	}
 
-	var medusa = new Monster( 'medusa', 10, ['stone rod'], 1, 4, false)
-	cyclops = new Monster('Cyclops', 20, ['goopy eye'], 1, 2, false),
-	basilisk = new Monster('Basilisk', 24, ['diary'], 5, 4, false),
-	giant = new Monster('GIANT!', 50, ['clubbing pants'], 0, 10, false),
-	hydra = new Monster('Hydra', 20, ['one of three heads'], 25, 8, false),
-	worstEnemy = new Monster ('Your Worst Enemy', 100, ['game winning item'], 1000000, 22, true)
+	
+
+	var monstersArray = [
+	new Monster( 'medusa', 10, ['stone rod'], 1, 4, false),
+	new Monster('Cyclops', 20, ['goopy eye'], 1, 2, false),
+	new Monster('Basilisk', 24, ['diary'], 5, 4, false),
+	new Monster('GIANT!', 50, ['clubbing pants'], 0, 10, false),
+	new Monster('Hydra', 20, ['one of three heads'], 25, 8, false),
+	new Monster ('Your Worst Enemy', 100, ['game winning item'], 1000000, 22, true),
+	]
 
 
-	var Room = function(monster, active) {
-		this.monster = monster;
+	var Room = function(active) {
+		this.createMonster = function() {
+			var randomNumber = Math.floor(Math.random() * 6)
+			var selectedMonster = []
+			selectedMonster.push(monstersArray[randomNumber])
+			monstersArray.splice(randomNumber, 1)
+			return selectedMonster[0]
+		}
 		this.active = false
+		this.monster = this.createMonster()
 	}
 
 	// console.log()
@@ -51,10 +62,10 @@ var mainControllerFunc = function($scope) {
 
 	$scope.rooms = [
 	new Room(),
-	new Room(medusa),
-	new Room(worstEnemy),
-	new Room(cyclops),
-	new Room(basilisk),
+	new Room(),
+	new Room(),
+	new Room(),
+	new Room(),
 	new Room(),
 	new Room(),
 	new Room(),
@@ -104,7 +115,7 @@ var mainControllerFunc = function($scope) {
 		    $scope.moveUpDown += 55;
 		    $scope.activeIndex += 6
 		   	$scope.activeRoom = $scope.rooms[$scope.activeIndex]
-		   	if ($scope.activeRoom.monster != undefined && $scope.activeRoom.monster.dead === false) {
+		   	if ($scope.activeRoom.monster != undefined && $scope.activeRoom.monster.dead === false ) {
 				$scope.activeMonster.push($scope.activeRoom.monster) 
 			}
 		}
@@ -114,7 +125,7 @@ var mainControllerFunc = function($scope) {
 		  	$scope.moveUpDown -= 55;
 		  	$scope.activeIndex -= 6
 		   	$scope.activeRoom = $scope.rooms[$scope.activeIndex]
-		   	if ($scope.activeRoom.monster != undefined && $scope.activeRoom.monster.dead === false) {
+		   	if ($scope.activeRoom.monster != undefined && $scope.activeRoom.monster.dead === false ) {
 				$scope.activeMonster.push($scope.activeRoom.monster) 
 			}
 
@@ -125,7 +136,7 @@ var mainControllerFunc = function($scope) {
 		   	$scope.moveLeftRight -= 50
 		   	$scope.activeIndex -= 1
 		   	$scope.activeRoom = $scope.rooms[$scope.activeIndex]
-		   	if ($scope.activeRoom.monster != undefined && $scope.activeRoom.monster.dead === false) {
+		   	if ($scope.activeRoom.monster != undefined && $scope.activeRoom.monster.dead === false ) {
 				$scope.activeMonster.push($scope.activeRoom.monster) 
 			}
 
@@ -135,7 +146,7 @@ var mainControllerFunc = function($scope) {
 		   	$scope.moveLeftRight += 50;
 		   	$scope.activeIndex += 1
 		   	$scope.activeRoom = $scope.rooms[$scope.activeIndex]
-		   	if ($scope.activeRoom.monster != undefined && $scope.activeRoom.monster.dead === false) {
+		   	if ($scope.activeRoom.monster != undefined && $scope.activeRoom.monster.dead === false ) {
 				$scope.activeMonster.push($scope.activeRoom.monster) 
 			}
 
@@ -179,6 +190,7 @@ var mainControllerFunc = function($scope) {
 		$scope.player.gold += monster.gold
 		$scope.activeMonster.pop()
 		$scope.dead = false
+		gameWinChecker()
 	}
 	//shop
 	$scope.buyPotion = function() {
@@ -203,6 +215,14 @@ var mainControllerFunc = function($scope) {
 		if ($scope.player.gold >= 2) {
 			$scope.player.defense += 2
 			$scope.player.gold -= 2
+		}
+	}
+	var gameWinChecker = function() {
+		for (var i = 0; i < $scope.player.items.length; i++) {
+			console.log($scope.player.items[i])
+			if ($scope.player.items[i] === 'game winning item') {
+				alert('you win the game')
+			}
 		}
 	}
 
